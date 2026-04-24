@@ -4,19 +4,37 @@ build/
 install/
 log/
 **.pcd
-uav_vln_data/
-env_seg_info/
 
-image/
-test/
-env_*/
+# Python packages and wheels
+*.whl
+*.egg-info/
+dist/
+*.pyc
+
+# Data and cache directories
 uav_vln_data/
-google/
-datagen/
+scene_data/
+env_seg_info/
+env_*/
+
+# Large binary/model files
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.pkl
+*.pickle
+*.npy
+
+# dlimp submodule
+dlimp/.git
+dlimp/dlimp.egg-info/
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
 
 extlibs/
-build/
-install/
 src/projects/*
-
-extlibs/*

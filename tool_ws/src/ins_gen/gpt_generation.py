@@ -169,13 +169,13 @@ async def main():
         folders = json.load(f)
 
     
-    traj_folder = "Your Trajectory Folders PATH"
+    traj_folder = "uav_vln_data/env_ue_smallcity/low_short"
     data_path = f"tool_ws/src/ins_gen/instructions/{args.type}.json"
 
 
     os.makedirs(os.path.dirname(data_path), exist_ok=True)
 
-    semaphore = asyncio.Semaphore(10)  # Limit the number of concurrent connections, usually set to twice the number of APIs
+    semaphore = asyncio.Semaphore(1)  # Limit the number of concurrent connections, usually set to twice the number of APIs
     
     tasks = [
         sem_task(process_folder(folder, pool, traj_folder), semaphore)

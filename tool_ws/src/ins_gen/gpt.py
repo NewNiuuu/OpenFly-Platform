@@ -8,15 +8,17 @@ from process import get_png_images, read_jsonl, find_consecutive_turns
  
         
 class OpenAIClient:
-    def __init__(self,api_key,model):
+    def __init__(self, api_key, model, base_url="https://open.bigmodel.cn/api/paas/v4", thinking_disabled=True):
         """
-        初始化 Azure OpenAI 客户端
+        初始化 OpenAI/智谱 客户端
         """
         self.client = OpenAI(
             api_key=api_key,
+            base_url=base_url,
         )
         self.model = model
-        self.token_usage = 0  # 记录 Token 使用量
+        self.thinking_disabled = thinking_disabled
+        self.token_usage = 0
         self.input_token = 0
         self.output_token = 0
     
@@ -71,7 +73,8 @@ class OpenAIClient:
                             }
                         ]
                     }
-                ]
+                ],
+                extra_body={"thinking": {"type": "disabled"}} if self.thinking_disabled else {}
             )
             self.update_token_usage(response)  # 更新 token 计数
             output = response.choices[0].message.content
@@ -128,7 +131,8 @@ class OpenAIClient:
                         }
                     ]
                 }
-            ]
+            ],
+            extra_body={"thinking": {"type": "disabled"}} if self.thinking_disabled else {}
         )
         self.update_token_usage(response)  # 更新 token 计数
         output = response.choices[0].message.content
@@ -174,7 +178,8 @@ class OpenAIClient:
                         "role": "user",
                         "content": f"Data: {actions}."
                     }
-                ]
+                ],
+                extra_body={"thinking": {"type": "disabled"}} if self.thinking_disabled else {}
             )
             self.update_token_usage(response)  # 更新 token 计数
             return response.choices[0].message.content

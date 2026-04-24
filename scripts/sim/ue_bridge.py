@@ -15,18 +15,22 @@ from unrealcv import Client
 
 class UEBridge:
     def __init__(self, ue_ip, ue_port, env_name):
-        self.kill_failed_process()
-        time.sleep(1)
+        # --- 注释掉下面这些“自作主张”的暗杀和重启代码 ---
+        # self.kill_failed_process()
+        # time.sleep(1)
 
-        port = self.find_available_port()
-        print(f"Available port: {port}")
-        self.modify_port_in_ini(port, env_name)
-        ue_port = port
+        # port = self.find_available_port()
+        # print(f"Available port: {port}")
+        # self.modify_port_in_ini(port, env_name)
+        # ue_port = port
 
-        self.env_name = env_name
-        self._sim_thread = threading.Thread(target=self._init_ue_sim)
-        self._sim_thread.start()
-        time.sleep(15)
+        # self.env_name = env_name
+        # self._sim_thread = threading.Thread(target=self._init_ue_sim)
+        # self._sim_thread.start()
+        # time.sleep(15)
+        
+        # 强行指定端口为 9000（因为我们左边手动开的就是 9000）
+        ue_port = 9000
 
         self._client = Client((ue_ip, ue_port))
         self._connection_check()
